@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1574812252 source:c:\users\diego\desktop\projeto_ed\projeto_ed\main.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+	"cadastro.h"
+
+1574811690 c:\users\diego\desktop\projeto_ed\projeto_ed\cadastro.h
+
+1574811923 source:c:\users\diego\desktop\projeto_ed\projeto_ed\cadastro.c
+	<stdio.h>
+	<stdlib.h>
+	"cadastro.h"
+
