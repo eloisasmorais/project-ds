@@ -6,7 +6,7 @@
 
 int main() {
   setlocale(LC_ALL,"Portuguese");
-  int opc, inseriu, estaVazia, tamanhoLista;
+  int opc, inseriu, estaVazia, tamanhoLista, encontrou;
   Lista *li;
   CLIENTE dados;
 
@@ -41,9 +41,12 @@ int main() {
           CLIENTE cli;
           printf("Digite o código do cliente: ");
           scanf("%d", &codigo);
-          // exibeRelatorioCod(li, codigo);
-          buscaCliCod(li, codigo, &cli);
-          exibeCli(&cli);
+          encontrou = buscaCliCod(li, codigo, &cli);
+          if (encontrou) {
+            exibeCli(&cli);
+          } else {
+            printf("Nenhum cliente encontrado!\n");
+          }
         } else {
           system("clear");
           exibeErro();
@@ -56,8 +59,14 @@ int main() {
           printf("Digite o nome: ");
           getchar();
           fgets(nome, 31, stdin);
+          printf("Nome digitado: %s\n", nome);
 
-          buscaCliNome(li, nome, &cli);
+          encontrou = buscaCliNome(li, nome, &cli);
+          if (encontrou){
+            exibeCli(&cli);
+          } else {
+            printf("Nenhum cliente encontrado!\n");
+          }
         } else {
           system("clear");
           exibeErro();

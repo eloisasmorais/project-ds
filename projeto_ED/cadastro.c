@@ -154,9 +154,20 @@ void buscaCliCod (Lista *li, int cod, CLIENTE *cli) {
   }
 }
 
-void buscaCliNome(Lista *li, char *nome, CLIENTE *cli) {
-  printf("00");
+int buscaCliNome(Lista *li, char *nome, CLIENTE *cli) {
+  Elem *no = *li;
+  printf("Nome digitado (func): %s\n", nome);
+  while (no != NULL && no->dados.nome != nome) {
+    printf("Nome: %s\n", no->dados.nome);
+    no = no->prox;
+  }
   
+  if (no == NULL) {
+    return 0;
+  } else {
+    *cli = no->dados;
+    return 1;
+  }
 }
 
 void exibeCli(CLIENTE *cli) {
