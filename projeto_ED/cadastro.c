@@ -19,6 +19,22 @@ Lista *cria_lista(){
     return li;
 }
 
+int tamanho_lista (Lista *li) {
+  if (li == NULL) {
+    return 0;
+  }
+  
+  int tamanho = 0;
+  Elem *no = *li;
+
+  while (no != NULL) {
+    tamanho++;
+    no = no->prox;
+  }
+
+  return tamanho;
+}
+
 int lista_vazia(Lista *li){
     if(li == NULL){
         return 1;
@@ -101,10 +117,21 @@ void exibeErro() {
 }
 
 //Funções de manipulação de arquivos
-void exibeRelatorioTotal() {
-  printf("****** Relatório Total - Contatos ******\n");
+void exibeRelatorioTotal(Lista *li) {
+  CLIENTE *dados;
+  Elem *no = *li;
+  while (no != NULL) {
+    *dados = no->dados;
+    printf("Código: %d\n", dados->codigo);
+    printf("Nome: %s\n", dados->nome);
+    printf("Empresa: %s\n", dados->empresa);
+    printf("Departamento: %s\n", dados->departamento);
+    printf("Telefone: %s\n", dados->telefone);
+    printf("Celular: %s\n", dados->celular);
+    printf("Email: %s\n", dados->email);
 
-  printf("Saindo case 2\n");
+    no = no->prox;
+  }
 }
 
 void exibeRelatorioCod() {

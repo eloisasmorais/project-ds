@@ -12,6 +12,8 @@ typedef struct elemento *Lista;
 
 Lista *cria_lista();
 
+int tamanho_lista (Lista *li);
+
 int inserirCliente(Lista *li, CLIENTE cli);
 
 int lista_vazia(Lista *li);
@@ -20,7 +22,7 @@ int lista_vazia(Lista *li);
 
 int exibeMenu(); //Exibe menu de opções do programa
 void exibeErro();
-void exibeRelatorioTotal();
+void exibeRelatorioTotal(Lista *li);
 void exibeRelatorioCod();
 void exibeRelatorioNome();
 void editaContato();

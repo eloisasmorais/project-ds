@@ -5,7 +5,7 @@
 
 int main() {
   setlocale(LC_ALL,"Portuguese");
-  int opc, inseriu, estaVazia;
+  int opc, inseriu, estaVazia, tamanhoLista;
   Lista *li;
   CLIENTE dados;
 
@@ -21,13 +21,16 @@ int main() {
       if (inseriu) {
         printf("Cadastro realizado com sucesso!\n");
       } else {
+        system("clear");
         printf("Erro ao realizar o cadastro!\n");
       }
     } else if (opc ==2 ) { //Relatório geral
       estaVazia = lista_vazia(li);
       if (!estaVazia) {
-        exibeRelatorioTotal();
+        printf("****** Relatório Total - Contatos ******\n");
+        exibeRelatorioTotal(li);
       } else {
+        system("clear");
         exibeErro();
       }
     } else if (opc == 3) { //Relatório individual por código
@@ -35,6 +38,7 @@ int main() {
         if(!estaVazia) {
           exibeRelatorioCod();
         } else {
+          system("clear");
           exibeErro();
         }
     } else if (opc == 4) { //Relatório individual por nome
@@ -42,6 +46,7 @@ int main() {
         if(!estaVazia) {
           exibeRelatorioNome();
         } else {
+          system("clear");
           exibeErro();
         }
     } else if (opc == 5) { //Edição de contato por código
@@ -49,6 +54,7 @@ int main() {
         if(!estaVazia) {
           editaContato();
         } else {
+          system("clear");
           exibeErro();
         }
     } else if (opc == 6) { //Remoção de contato por código
@@ -56,6 +62,7 @@ int main() {
         if(!estaVazia) {
           removeContato();
         } else {
+          system("clear");
           exibeErro();
         }
     } else if (opc == 7) {//Encerra programa
@@ -64,7 +71,6 @@ int main() {
     }
 
     sleep(2);
-    system("clear");
     opc = exibeMenu();
   }
   return 0;
