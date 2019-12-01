@@ -21,7 +21,15 @@ Lista *criaLista(){
 }
 
 void destroiLista(Lista *li) {
-
+  if (li != NULL) {
+    Elem *no;
+    while ((*li) != NULL) {
+      no = *li;
+      *li = (*li)->prox;
+      free(no);
+    }
+    free(li);
+  }
 }
 
 int tamanhoLista (Lista *li) {
@@ -203,8 +211,31 @@ int editaContato(Lista *li, int codigo) {
   }
 }
 
-void removeContato() {
+int removeContato(Lista *li, int codigo) {
   printf("Remoção de contato\n\n");
+  if (li == NULL) return 0;
+
+  Elem *no = *li;
+  while (no != NULL && no->dados.codigo != codigo) {
+    no = no->prox;
+  }
+
+  if (no == NULL) {
+    return 0;
+  }
+
+  if (no->ant == NULL) {
+    *li = no->prox;
+  } else {
+    no->ant->prox = no->prox;
+  } 
+
+  if (no->prox != NULL) {
+    no->prox->ant = no->ant;
+  }
+
+  free(no);
+  return 1;
 }
 
 CLIENTE recebeDados() {

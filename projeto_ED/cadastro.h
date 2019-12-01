@@ -28,6 +28,6 @@ int buscaCliCod(Lista *li, int cod, CLIENTE *cli);
 int buscaCliNome(Lista *li, char *nome, CLIENTE *cli);
 void exibeCli(CLIENTE *cli);
 int editaContato(Lista *li, int codigo);
-void removeContato();
+int removeContato(Lista *li, int codigo);
 
 CLIENTE recebeDados();

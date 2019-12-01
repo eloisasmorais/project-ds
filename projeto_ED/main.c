@@ -90,7 +90,15 @@ int main() {
     } else if (opc == 6) { //Remoção de contato por código
         estaVazia = listaVazia(li);
         if(!estaVazia) {
-          removeContato();
+          int codigo;
+          printf("Digite o código do cliente a ser removido: ");
+          scanf("%d", &codigo);
+          encontrou = removeContato(li, codigo);
+          if (encontrou) {
+            printf("Cliente removido com sucesso!\n");
+          } else {
+            printf("Não foi possível remover, cliente não encontrado.\n");
+          }
         } else {
           system("clear");
           exibeErro();
