@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include <string.h>
 #include"cadastro.h"
 
 struct elemento{
@@ -122,8 +123,8 @@ void exibeRelatorioTotal(Lista *li) {
   Elem *no = *li;
   while (no != NULL) {
     *dados = no->dados;
-    printf("Código: %d\n", dados->codigo);
-    printf("Nome: %s\n", dados->nome);
+    printf("\n============= CLIENTE =============\n");
+    printf("%d - %s\n", dados->codigo, dados->nome);
     printf("Empresa: %s\n", dados->empresa);
     printf("Departamento: %s\n", dados->departamento);
     printf("Telefone: %s\n", dados->telefone);
@@ -153,26 +154,27 @@ void removeContato() {
 CLIENTE recebeDados() {
   CLIENTE dados;
 
-  printf("Informe o código do funcionário:\n");
+  printf("Informe o código do funcionário: ");
   scanf("%d",&dados.codigo);
-  printf("Informe o nome:\n");
   getchar();
-  fgets(dados.nome, 29, stdin);
-  printf("Informe a Empresa:\n");
-  getchar();
-  fgets(dados.empresa,19,stdin);
-  printf("Informe o departamento:\n");
-  getchar();
-  fgets(dados.departamento,19,stdin);
-  printf("Informe o telefone:\n");
-  getchar();
-  fgets(dados.telefone,19,stdin);
-  printf("Informe o celular:\n");
-  getchar();
-  fgets(dados.celular,19,stdin);
-  printf("Informe o email:\n");
-  getchar();
-  fgets(dados.email,29,stdin);
+  printf("Informe o nome: ");
+  fgets(dados.nome, 31, stdin);
+  dados.nome[strlen(dados.nome)-1]='\0';
+  printf("Informe a Empresa: ");
+  fgets(dados.empresa,21,stdin);
+  dados.empresa[strlen(dados.empresa)-1]='\0';
+  printf("Informe o departamento: ");
+  fgets(dados.departamento,21,stdin);
+  dados.departamento[strlen(dados.departamento)-1]='\0';
+  printf("Informe o telefone: ");
+  fgets(dados.telefone,21,stdin);
+  dados.telefone[strlen(dados.telefone)-1]='\0';
+  printf("Informe o celular: ");
+  fgets(dados.celular,21,stdin);
+  dados.celular[strlen(dados.celular)-1]='\0';
+  printf("Informe o email: ");
+  fgets(dados.email,31,stdin);
+  dados.email[strlen(dados.email)-1]='\0';
 
   return dados;
 }
