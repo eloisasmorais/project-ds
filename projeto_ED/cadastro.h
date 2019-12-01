@@ -24,8 +24,9 @@ void destroiLista(Lista *li);
 int exibeMenu(); //Exibe menu de opções do programa
 void exibeErro();
 void exibeRelatorioTotal(Lista *li);
-void exibeRelatorioCod();
-void exibeRelatorioNome();
+void buscaCliCod(Lista *li, int cod, CLIENTE *cli);
+void buscaCliNome(Lista *li, char *nome, CLIENTE *cli);
+void exibeCli(CLIENTE *cli);
 void editaContato();
 void removeContato();
 

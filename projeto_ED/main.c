@@ -37,7 +37,13 @@ int main() {
     } else if (opc == 3) { //Relatório individual por código
         estaVazia = listaVazia(li);
         if(!estaVazia) {
-          exibeRelatorioCod();
+          int codigo;
+          CLIENTE cli;
+          printf("Digite o código do cliente: ");
+          scanf("%d", &codigo);
+          // exibeRelatorioCod(li, codigo);
+          buscaCliCod(li, codigo, &cli);
+          exibeCli(&cli);
         } else {
           system("clear");
           exibeErro();
@@ -45,7 +51,13 @@ int main() {
     } else if (opc == 4) { //Relatório individual por nome
         estaVazia = listaVazia(li);
         if(!estaVazia) {
-          exibeRelatorioNome();
+          char nome[31];
+          CLIENTE cli;
+          printf("Digite o nome: ");
+          getchar();
+          fgets(nome, 31, stdin);
+
+          buscaCliNome(li, nome, &cli);
         } else {
           system("clear");
           exibeErro();

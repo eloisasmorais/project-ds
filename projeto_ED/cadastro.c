@@ -121,7 +121,7 @@ void exibeErro() {
   printf("\n\nLista não preenchida, nada a ser exibido...\n\n");
 }
 
-//Funções de manipulação de arquivos
+//Funções com manipulação de arquivos
 void exibeRelatorioTotal(Lista *li) {
   CLIENTE *dados;
   Elem *no = *li;
@@ -139,12 +139,34 @@ void exibeRelatorioTotal(Lista *li) {
   }
 }
 
-void exibeRelatorioCod() {
-  printf("Relatório por código!\n");
+void buscaCliCod (Lista *li, int cod, CLIENTE *cli) {
+  Elem *no = *li;
+  while (no != NULL && no->dados.codigo != cod) {
+    no = no->prox;
+  }
+
+  if (no == NULL) {
+    printf("Nenhum cliente encontrado!\n");
+    return;
+  } else {
+    *cli = no->dados;
+    return;
+  }
 }
 
-void exibeRelatorioNome() {
-  printf("Relatório por nome!\n");
+void buscaCliNome(Lista *li, char *nome, CLIENTE *cli) {
+  printf("00");
+  
+}
+
+void exibeCli(CLIENTE *cli) {
+  printf("\n============= CLIENTE =============\n");
+  printf("%d - %s\n", cli->codigo, cli->nome);
+  printf("Empresa: %s\n", cli->empresa);
+  printf("Departamento: %s\n", cli->departamento);
+  printf("Telefone: %s\n", cli->telefone);
+  printf("Celular: %s\n", cli->celular);
+  printf("Email: %s\n", cli->email);
 }
 
 void editaContato() {
