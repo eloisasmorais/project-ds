@@ -59,7 +59,7 @@ int main() {
           printf("Digite o nome: ");
           getchar();
           fgets(nome, 31, stdin);
-          printf("Nome digitado: %s\n", nome);
+          nome[strlen(nome)-1]='\0';
 
           encontrou = buscaCliNome(li, nome, &cli);
           if (encontrou){
@@ -104,8 +104,8 @@ int main() {
           exibeErro();
         }
     } else if (opc == 7) {//Encerra programa
-      destroiLista(li);
       printf("Encerrando o programa...\n\n");
+      destroiLista(li);
       return 0;
     }
 
@@ -116,5 +116,4 @@ int main() {
       opc = exibeMenu(); 
     }
   }
-  return 0;
 }

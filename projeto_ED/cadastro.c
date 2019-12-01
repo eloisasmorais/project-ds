@@ -154,7 +154,6 @@ int buscaCliCod (Lista *li, int cod, CLIENTE *cli) {
   }
 
   if (no == NULL) {
-    printf("Nenhum cliente encontrado!\n");
     return 0;
   } else {
     *cli = no->dados;
@@ -164,10 +163,11 @@ int buscaCliCod (Lista *li, int cod, CLIENTE *cli) {
 
 int buscaCliNome(Lista *li, char *nome, CLIENTE *cli) {
   Elem *no = *li;
-  printf("Nome digitado (func): %s\n", nome);
-  while (no != NULL && no->dados.nome != nome) {
-    printf("Nome: %s\n", no->dados.nome);
+  printf("Nome digitado (parametro da função): %s\n", nome);
+  while (no != NULL && strcmp(no->dados.nome, nome) != 0) {
     no = no->prox;
+    // printf("Nome dentro do while: %s\n", no->dados.nome);
+    // printf("strcmp: %d\n", strcmp(no->dados.nome, nome));
   }
   
   if (no == NULL) {
@@ -199,12 +199,6 @@ int editaContato(Lista *li, int codigo) {
     return 0;
   } else {
       CLIENTE cli = recebeDados();
-      printf("nome: %s\n", cli.nome);
-      printf("empresa: %s\n", cli.empresa);
-      printf("departamento: %s\n", cli.departamento);
-      printf("telefone: %s\n", cli.telefone);
-      printf("celular: %s\n", cli.celular);
-      printf("email: %s\n", cli.email);
       no->dados = cli;
 
       return 1;
