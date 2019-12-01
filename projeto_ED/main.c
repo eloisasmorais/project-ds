@@ -1,88 +1,137 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<locale.h>
-#include"cadastro.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include "cadastro.h"
 
-int main(){
-    setlocale(LC_ALL,"Portuguese");
-    int opc, x;
-    Lista *li;
-    CLIENTE dados;
+// int main() {
+//   setlocale(LC_ALL,"Portuguese");
+//   int opc, x;
+//   Lista *li;
+//   CLIENTE dados;
 
-    li = cria_lista();
+//   li = cria_lista();
 
-    printf("****** Lista de Contatos ******\n");
+//   printf("****** Lista de Contatos ******\n");
 
-    while(opc < 1 || opc > 6){
-        printf("1 - Inserir novo contato\n");
-        printf("2 - Gerar e exibir relat髍io de contatos em forma de lista total\n");
-        printf("3 - Gerar e exibir relat髍io individual com busca por identificador\n");
-        printf("4 - Gerar e exibir relat髍io com busca por nome\n");
-        printf("5 - Edi玢o do contato atrav閟 de um identificador\n");
-        printf("6 - Remover contato atrav閟 de um identificador\n");
-        printf("7 - Encerrar o programa\n\n");
-        printf("Escolha uma op玢o:\n");
-        scanf("%d",&opc);
+//   opc = exibeMenu();
 
+//   while (opc) {
+//     switch(opc){
+//       case 1:
+        // printf("Informe o c贸digo do funcion谩rio:\n");
+        // scanf("%d",&dados.codigo);
+        // printf("Informe o nome:\n");
+        // getchar();
+        // fgets(dados.nome, 29, stdin);
+        // printf("Informe a Empresa:\n");
+        // getchar();
+        // fgets(dados.empresa,19,stdin);
+        // printf("Informe o departamento:\n");
+        // getchar();
+        // fgets(dados.departamento,19,stdin);
+        // printf("Informe o telefone:\n");
+        // getchar();
+        // fgets(dados.telefone,19,stdin);
+        // printf("Informe o celular:\n");
+        // getchar();
+        // fgets(dados.celular,19,stdin);
+        // printf("Informe o email:\n");
+        // getchar();
+        // fgets(dados.email,29,stdin);
+//         x = inserirCliente(li, dados);
+//         if(x){
+//           printf("Cadastro realizado com sucesso!\n");
+//         }
+//         else{
+//           printf("Erro ao realizar o cadastro!\n");
+//         }
+//         break;
+//       case 2:
+//         exibeRelatorioTotal();
+//         break;
+//       case 3:
+//         printf("opcao 3");
+//         break;
+//       case 4:
+//         printf("opcao 4");
+//         break;
+//       case 5:
+//         printf("opcao 5");
+//         break;
+//       case 6:
+//         printf("opcao 6");
+//         break;
+//       case 7:
+//         printf("Encerrando programa...\n");
+//         return 0;
+//     }
+//     opc = exibeMenu();
+//   }
+// }
 
-        switch(opc){
-        case 1:
-            printf("Informe o c骴igo: \n");
-            scanf("%d",&dados.codigo);
-            printf("Informe o nome: \n");
-            getchar();
-            fgets(dados.nome, 29, stdin);
-            printf("Informe a Empresa: \n");
-            getchar();
-            fgets(dados.empresa,19,stdin);
-            printf("Informe o departamento: \n");
-            getchar();
-            fgets(dados.departamento,19,stdin);
-            printf("Informe o telefone: \n");
-            getchar();
-            fgets(dados.telefone,19,stdin);
-            printf("Informe o celular\n");
-            getchar();
-            fgets(dados.celular,19,stdin);
-            printf("Informe o email: \n");
-            getchar();
-            fgets(dados.email,29,stdin);
-            x = inserirCliente(li, dados);
-            if(x){
-                printf("Cadastro realizado com sucesso!\n");
-            }
-            else{
-                printf("Erro ao realizar o cadastro!\n");
-            }
+int main() {
+  setlocale(LC_ALL,"Portuguese");
+  int opc, inseriu, estaVazia;
+  Lista *li;
+  CLIENTE dados;
 
-            break;
-        case 2:
-            printf("opcao 2");
-            break;
-        case 3:
-            printf("opcao 3");
-            break;
-        case 4:
-            printf("opcao 4");
-            break;
-        case 5:
-            printf("opcao 5");
-            break;
-        case 6:
-            printf("opcao 6");
-            break;
-        case 7:
-            printf("opcao 7");
-            break;
-        default:
-            printf("opcao invalida");
-            break;
+  li = cria_lista();
 
+  printf("****** Lista de Contatos ******\n");
+  opc = exibeMenu();
+
+  while(opc) {
+    if (opc == 1) {
+      dados = recebeDados();
+      inseriu = inserirCliente(li, dados);
+      if (inseriu) {
+        printf("Cadastro realizado com sucesso!\n");
+      } else {
+        printf("Erro ao realizar o cadastro!\n");
+      }
+    } else if (opc ==2 ) { //Relat贸rio geral
+      estaVazia = lista_vazia(li);
+      if (!estaVazia) {
+        exibeRelatorioTotal();
+      } else {
+        exibeErro();
+      }
+    } else if (opc == 3) { //Relat贸rio individual por c贸digo
+        estaVazia = lista_vazia(li);
+        if(!estaVazia) {
+          exibeRelatorioCod();
+        } else {
+          exibeErro();
         }
+    } else if (opc == 4) { //Relat贸rio individual por nome
+        estaVazia = lista_vazia(li);
+        if(!estaVazia) {
+          exibeRelatorioNome();
+        } else {
+          exibeErro();
+        }
+    } else if (opc == 5) { //Edi莽茫o de contato por c贸digo
+        estaVazia = lista_vazia(li);
+        if(!estaVazia) {
+          editaContato();
+        } else {
+          exibeErro();
+        }
+    } else if (opc == 6) { //Remo莽茫o de contato por c贸digo
+        estaVazia = lista_vazia(li);
+        if(!estaVazia) {
+          removeContato();
+        } else {
+          exibeErro();
+        }
+    } else if (opc == 7) {//Encerra programa
+        printf("Encerrando o programa...\n\n");
+        return 0;
     }
 
-
-
+    sleep(2);
+    system("clear");
+    opc = exibeMenu();
+  }
+  return 0;
 }
-
-
