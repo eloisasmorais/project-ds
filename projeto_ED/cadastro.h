@@ -16,3 +16,14 @@ int inserirCliente(Lista *li, CLIENTE cli);
 
 int lista_vazia(Lista *li);
 
+//Novas funções
+
+int exibeMenu(); //Exibe menu de opções do programa
+void exibeErro();
+void exibeRelatorioTotal();
+void exibeRelatorioCod();
+void exibeRelatorioNome();
+void editaContato();
+void removeContato();
+
+CLIENTE recebeDados();
