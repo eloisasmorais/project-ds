@@ -74,7 +74,15 @@ int main() {
     } else if (opc == 5) { //Edição de contato por código
         estaVazia = listaVazia(li);
         if(!estaVazia) {
-          editaContato();
+          int codigo;
+          printf("Digite o código do cliente a ser editado: ");
+          scanf("%d", &codigo);
+          encontrou = editaContato(li, codigo);
+          if (encontrou) {
+            printf("Cliente editado com sucesso!\n");
+          } else {
+            printf("Não foi possível editar, cliente não encontrado.\n");
+          }
         } else {
           system("clear");
           exibeErro();

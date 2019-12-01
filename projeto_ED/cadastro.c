@@ -139,7 +139,7 @@ void exibeRelatorioTotal(Lista *li) {
   }
 }
 
-void buscaCliCod (Lista *li, int cod, CLIENTE *cli) {
+int buscaCliCod (Lista *li, int cod, CLIENTE *cli) {
   Elem *no = *li;
   while (no != NULL && no->dados.codigo != cod) {
     no = no->prox;
@@ -147,10 +147,10 @@ void buscaCliCod (Lista *li, int cod, CLIENTE *cli) {
 
   if (no == NULL) {
     printf("Nenhum cliente encontrado!\n");
-    return;
+    return 0;
   } else {
     *cli = no->dados;
-    return;
+    return 1;
   }
 }
 
@@ -180,8 +180,27 @@ void exibeCli(CLIENTE *cli) {
   printf("Email: %s\n", cli->email);
 }
 
-void editaContato() {
+int editaContato(Lista *li, int codigo) {
   printf("Edição de contato\n\n");
+  Elem *no = *li;
+  while (no != NULL && no->dados.codigo != codigo) {
+    no = no->prox;
+  }
+
+  if (no == NULL) {
+    return 0;
+  } else {
+      CLIENTE cli = recebeDados();
+      printf("nome: %s\n", cli.nome);
+      printf("empresa: %s\n", cli.empresa);
+      printf("departamento: %s\n", cli.departamento);
+      printf("telefone: %s\n", cli.telefone);
+      printf("celular: %s\n", cli.celular);
+      printf("email: %s\n", cli.email);
+      no->dados = cli;
+
+      return 1;
+  }
 }
 
 void removeContato() {
