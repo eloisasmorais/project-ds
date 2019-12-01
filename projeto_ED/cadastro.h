@@ -10,14 +10,15 @@ typedef struct cli{
 
 typedef struct elemento *Lista;
 
-Lista *cria_lista();
+Lista *criaLista();
 
-int tamanho_lista (Lista *li);
+int tamanhoLista (Lista *li);
 
 int inserirCliente(Lista *li, CLIENTE cli);
 
-int lista_vazia(Lista *li);
+int listaVazia(Lista *li);
 
+void destroiLista(Lista *li);
 //Novas funções
 
 int exibeMenu(); //Exibe menu de opções do programa

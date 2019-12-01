@@ -12,7 +12,7 @@ struct elemento{
 typedef struct elemento Elem;
 
 //FUNÇÕES LISTA 
-Lista *cria_lista(){
+Lista *criaLista(){
     Lista *li = (Lista*) malloc(sizeof(Lista));
     if(li != NULL){
         *li = NULL;
@@ -20,7 +20,11 @@ Lista *cria_lista(){
     return li;
 }
 
-int tamanho_lista (Lista *li) {
+void destroiLista(Lista *li) {
+
+}
+
+int tamanhoLista (Lista *li) {
   if (li == NULL) {
     return 0;
   }
@@ -36,7 +40,7 @@ int tamanho_lista (Lista *li) {
   return tamanho;
 }
 
-int lista_vazia(Lista *li){
+int listaVazia(Lista *li){
     if(li == NULL){
         return 1;
     }
@@ -56,7 +60,7 @@ int inserirCliente(Lista *li, CLIENTE cli){
       return 0;
   }
   no->dados = cli;
-  if(lista_vazia(li)){
+  if(listaVazia(li)){
       no->prox = NULL;
       no->ant = NULL;
       *li = no;

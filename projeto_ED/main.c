@@ -10,7 +10,7 @@ int main() {
   Lista *li;
   CLIENTE dados;
 
-  li = cria_lista();
+  li = criaLista();
 
   printf("****** Lista de Contatos ******\n");
   opc = exibeMenu();
@@ -26,7 +26,7 @@ int main() {
         printf("Erro ao realizar o cadastro!\n");
       }
     } else if (opc ==2 ) { //Relatório geral
-      estaVazia = lista_vazia(li);
+      estaVazia = listaVazia(li);
       if (!estaVazia) {
         printf("****** Relatório Total - Contatos ******\n");
         exibeRelatorioTotal(li);
@@ -35,7 +35,7 @@ int main() {
         exibeErro();
       }
     } else if (opc == 3) { //Relatório individual por código
-        estaVazia = lista_vazia(li);
+        estaVazia = listaVazia(li);
         if(!estaVazia) {
           exibeRelatorioCod();
         } else {
@@ -43,7 +43,7 @@ int main() {
           exibeErro();
         }
     } else if (opc == 4) { //Relatório individual por nome
-        estaVazia = lista_vazia(li);
+        estaVazia = listaVazia(li);
         if(!estaVazia) {
           exibeRelatorioNome();
         } else {
@@ -51,7 +51,7 @@ int main() {
           exibeErro();
         }
     } else if (opc == 5) { //Edição de contato por código
-        estaVazia = lista_vazia(li);
+        estaVazia = listaVazia(li);
         if(!estaVazia) {
           editaContato();
         } else {
@@ -59,7 +59,7 @@ int main() {
           exibeErro();
         }
     } else if (opc == 6) { //Remoção de contato por código
-        estaVazia = lista_vazia(li);
+        estaVazia = listaVazia(li);
         if(!estaVazia) {
           removeContato();
         } else {
@@ -67,12 +67,17 @@ int main() {
           exibeErro();
         }
     } else if (opc == 7) {//Encerra programa
-        printf("Encerrando o programa...\n\n");
-        return 0;
+      destroiLista(li);
+      printf("Encerrando o programa...\n\n");
+      return 0;
     }
 
-    sleep(2);
-    opc = exibeMenu();
+    int l = 0;
+    printf("Aperte 1 para voltar ao menu: ");
+    scanf("%d", &l);
+    if (l) {
+      opc = exibeMenu(); 
+    }
   }
   return 0;
 }
