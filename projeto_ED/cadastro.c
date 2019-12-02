@@ -60,6 +60,7 @@ int listaVazia(Lista *li){
 
 //Inserir cliente
 int inserirCliente(Lista *li, CLIENTE cli){
+  printf("Inserindo cliente na lista...\n");
   if(li == NULL){
       return 0;
   }
@@ -259,13 +260,14 @@ CLIENTE recebeDados() {
 //Funções auxiliares para manipulação de arquivos
 
 int gravaArquivo (FILE *arq, Lista *li) {
+  printf("Gravando arquivo...\n");
   if (arq == NULL || li == NULL) return 0;
 
   CLIENTE *dados;
   Elem *no = *li;
   while (no != NULL) {
     *dados = no->dados;
-    if (!fwrite(dados, sizeof(CLIENTE), 1, arq)) printf("Erro ao gravar\n");
+    fwrite(dados, sizeof(CLIENTE), 1, arq);
 
     no = no->prox;
   }
@@ -276,6 +278,7 @@ int gravaArquivo (FILE *arq, Lista *li) {
 void leLista (FILE *arq, Lista *li) { 
   CLIENTE cli;
   while (fread(&cli, sizeof(CLIENTE), 1, arq)) {
+    // fread(&cli, sizeof(CLIENTE), 1, arq);
     inserirCliente(li, cli);
   }
 }
