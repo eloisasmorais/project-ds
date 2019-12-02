@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 typedef struct cli{
     int codigo;
     char nome[30];
@@ -31,3 +33,7 @@ int editaContato(Lista *li, int codigo);
 int removeContato(Lista *li, int codigo);
 
 CLIENTE recebeDados();
+
+//Funções auxiliares para manipulação de arquivos
+int gravaArquivo (FILE *arq, Lista *li); 
+void leLista(FILE *arq, Lista *li);

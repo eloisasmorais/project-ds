@@ -1,7 +1,7 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include"cadastro.h"
+#include "cadastro.h"
 
 struct elemento{
     struct elemento *ant;
@@ -129,7 +129,6 @@ void exibeErro() {
   printf("\n\nLista não preenchida, nada a ser exibido...\n\n");
 }
 
-//Funções com manipulação de arquivos
 void exibeRelatorioTotal(Lista *li) {
   CLIENTE *dados;
   Elem *no = *li;
@@ -163,11 +162,8 @@ int buscaCliCod (Lista *li, int cod, CLIENTE *cli) {
 
 int buscaCliNome(Lista *li, char *nome, CLIENTE *cli) {
   Elem *no = *li;
-  printf("Nome digitado (parametro da função): %s\n", nome);
   while (no != NULL && strcmp(no->dados.nome, nome) != 0) {
     no = no->prox;
-    // printf("Nome dentro do while: %s\n", no->dados.nome);
-    // printf("strcmp: %d\n", strcmp(no->dados.nome, nome));
   }
   
   if (no == NULL) {
@@ -258,4 +254,28 @@ CLIENTE recebeDados() {
   dados.email[strlen(dados.email)-1]='\0';
 
   return dados;
+}
+
+//Funções auxiliares para manipulação de arquivos
+
+int gravaArquivo (FILE *arq, Lista *li) {
+  if (arq == NULL || li == NULL) return 0;
+
+  CLIENTE *dados;
+  Elem *no = *li;
+  while (no != NULL) {
+    *dados = no->dados;
+    if (!fwrite(dados, sizeof(CLIENTE), 1, arq)) printf("Erro ao gravar\n");
+
+    no = no->prox;
+  }
+
+  return 1;
+}
+
+void leLista (FILE *arq, Lista *li) { 
+  CLIENTE cli;
+  while (fread(&cli, sizeof(CLIENTE), 1, arq)) {
+    inserirCliente(li, cli);
+  }
 }
