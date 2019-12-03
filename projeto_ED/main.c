@@ -162,8 +162,12 @@ int main() {
         fclose(arq);
     } else if (opc == 7) {//Encerra programa
       printf("Encerrando o programa...\n\n");
-      destroiLista(li);
-      return 0;
+       if (!estaVazia) {
+        destroiLista(li);
+        return 0;
+      } else {
+        return 0;
+      }
     }
 
     int l = 0;
