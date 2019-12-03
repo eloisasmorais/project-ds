@@ -130,7 +130,7 @@ void exibeErro() {
 
 void exibeRelatorioTotal(Lista *li) {
   CLIENTE *dados;
-  dados = (CLIENTE*) calloc (tamanhoLista(li), sizeof(CLIENTE));
+  dados = (CLIENTE*) malloc (tamanhoLista(li)* sizeof(CLIENTE));
   Elem *no = *li;
   while (no != NULL) {
     *dados = no->dados;
