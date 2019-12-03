@@ -59,7 +59,6 @@ int listaVazia(Lista *li){
 
 //Inserir cliente
 int inserirCliente(Lista *li, CLIENTE cli){
-  printf("Inserindo cliente na lista...\n");
   if(li == NULL){
       return 0;
   }
@@ -257,12 +256,26 @@ CLIENTE recebeDados() {
 }
 
 //Funções auxiliares para manipulação de arquivos
+FILE *abreEdicao(Lista *li) {
+  arq = fopen("clientes.txt", "wb");
+  int leu = leArquivo(li);
+  fclose(arq);
+  arq = fopen("clientes.txt", "w+b");
 
+  return arq;
+}
+FILE *abreInsercao();
 
-int gravaArquivo (FILE *arq, Lista *li) {
-  printf("Gravando arquivo...\n");
-  if (arq == NULL || li == NULL) return 0;
-
+int gravaArquivo (Lista *li, int tipo) {
+  if (tipo == 1) { //Verifica se é inserção ou edição
+    arq = fopen("clientes.txt", "wb");
+  } else { //Abre no modo edição
+    arq = abreEdicao(li);
+  }
+  if (arq == NULL) {
+    printf("Erro ao abrir arquivo\n");
+    return 0;
+  }
 
   CLIENTE *dados;
   dados = (CLIENTE*) calloc (tamanhoLista(li), sizeof(CLIENTE));
@@ -273,14 +286,21 @@ int gravaArquivo (FILE *arq, Lista *li) {
 
     no = no->prox;
   }
-
+  
+  fclose(arq);
   return 1;
 }
 
-void leLista (FILE *arq, Lista *li) { 
+int leArquivo (Lista *li) { 
+  arq = fopen("clientes.txt", "rb");
+  if (arq == NULL) {
+    return 0;
+  }
   CLIENTE cli;
-  while (fread(&cli, sizeof(CLIENTE), 1, arq)) {
-    // fread(&cli, sizeof(CLIENTE), 1, arq);
+  while (!feof(arq)) {
+    fread(&cli, sizeof(CLIENTE), 1, arq);
     inserirCliente(li, cli);
   }
+  fclose(arq);
+  return 1;
 }

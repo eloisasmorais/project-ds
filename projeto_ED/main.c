@@ -6,57 +6,36 @@
 
 int main() {
   setlocale(LC_ALL,"Portuguese");
-  int opc, estaVazia, tamanho;
+  int opc, estaVazia, gravou, leu, inseriu;
   Lista *li = NULL;
   CLIENTE dados;
 
   li = criaLista();
   FILE *arq;
-  // FILE *arq = fopen("clientes.txt", "a+b");
-  // if (arq == NULL) {
-  //   printf("Erro ao abrir arquivo\n");
-  //   return 0;
-  // }
+  arq = fopen("clientes.txt", "rb");
+  if (arq == NULL) {
+    arq = fopen("clientes.txt", "wb");
+  } else {
+    leu = leArquivo(li);
+    fclose(arq);
+  }
+
   /* Menu */
   printf("****** Lista de Contatos ******\n");
   opc = exibeMenu();
 
   while(opc) {
     if (opc == 1) {
-      arq = fopen("clientes.txt", "rb");
-
-      if (arq == NULL) {
-        arq = fopen("clientes.txt", "wb");
-      } else {
-        leLista(arq, li);
-      }
-      //FILE *arq = fopen("clientes.txt", "wb");
-  
       dados = recebeDados();
-
-      int inseriu = inserirCliente(li, dados);
-      if (inseriu) {
-        printf("Cadastro realizado com sucesso!\n");
-      } else {
-        system("clear");
-        printf("Erro ao realizar o cadastro!\n");
-      }
-
-      int gravou = gravaArquivo(arq, li);
-      if (gravou) {
-        printf("Dados gravados com sucesso!\n");
-      } else {
-        printf("Erro ao gravar dados.\n");
-      }
+      inseriu = inserirCliente(li, dados);
+      gravou = gravaArquivo(li, 1);
       
-      fclose(arq);
-    } else if (opc == 2) { //Relatório geral
-      arq = fopen("clientes.txt", "rb");
-      if (arq == NULL) {
-        printf("Erro ao abrir arquivo\n");
-        return 0;
+      if (inseriu && gravou) {
+        printf("Cliente armazenado com sucesso!\n");
+      } else {
+        printf("Erro ao armazenar cliente\n");
       }
-      leLista(arq, li);
+    } else if (opc == 2) { //Relatório geral
       estaVazia = listaVazia(li);
       if (!estaVazia) {
         printf("****** Relatório Total - Contatos ******\n");
@@ -65,61 +44,46 @@ int main() {
         system("clear");
         exibeErro();
       }
-      fclose(arq);
     } else if (opc == 3) { //Relatório individual por código
-        arq = fopen("clientes.txt", "rb");
-        if (arq == NULL) {
-          printf("Erro ao abrir arquivo\n");
-          return 0;
-        }
-        leLista(arq, li);
-        estaVazia = listaVazia(li);
-        if(!estaVazia) {
-          int codigo;
-          CLIENTE cli;
-          printf("Digite o código do cliente: ");
-          scanf("%d", &codigo);
-          int encontrou = buscaCliCod(li, codigo, &cli);
-          if (encontrou) {
-            exibeCli(&cli);
-          } else {
-            printf("Nenhum cliente encontrado!\n");
-          }
+      estaVazia = listaVazia(li);
+      if(!estaVazia) {
+        int codigo;
+        CLIENTE cli;
+        printf("Digite o código do cliente: ");
+        scanf("%d", &codigo);
+        int encontrou = buscaCliCod(li, codigo, &cli);
+        if (encontrou) {
+          exibeCli(&cli);
         } else {
-          system("clear");
-          exibeErro();
+          printf("Nenhum cliente encontrado!\n");
         }
-        fclose(arq);
+      } else {
+        system("clear");
+        exibeErro();
+      }
     } else if (opc == 4) { //Relatório individual por nome
-        arq = fopen("clientes.txt", "rb");
-        if (arq == NULL) {
-          printf("Erro ao abrir arquivo\n");
-          return 0;
-        }
-        estaVazia = listaVazia(li);
-        if(!estaVazia) {
-          char nome[31];
-          CLIENTE cli;
-          printf("Digite o nome: ");
-          getchar();
-          fgets(nome, 31, stdin);
-          nome[strlen(nome)-1]='\0';
+      estaVazia = listaVazia(li);
+      if(!estaVazia) {
+        char nome[31];
+        CLIENTE cli;
+        printf("Digite o nome: ");
+        getchar();
+        fgets(nome, 31, stdin);
+        nome[strlen(nome)-1]='\0';
 
-          int encontrou = buscaCliNome(li, nome, &cli);
-          if (encontrou){
-            exibeCli(&cli);
-          } else {
-            printf("Nenhum cliente encontrado!\n");
-          }
+        int encontrou = buscaCliNome(li, nome, &cli);
+        if (encontrou){
+          exibeCli(&cli);
         } else {
-          system("clear");
-          exibeErro();
+          printf("Nenhum cliente encontrado!\n");
         }
-        fclose(arq);
+      } else {
+        system("clear");
+        exibeErro();
+      }
     } else if (opc == 5) { //Edição de contato por código
-        arq = fopen("clientes.txt", "r+b");
-        if (arq == NULL) {
-          printf("Erro ao abrir arquivo\n");
+        if (!leu) {
+          printf("Erro ao ler arquivo.\n");
           return 0;
         }
         estaVazia = listaVazia(li);
@@ -130,6 +94,7 @@ int main() {
           int encontrou = editaContato(li, codigo);
           if (encontrou) {
             printf("Cliente editado com sucesso!\n");
+            gravou = gravaArquivo(li, 2);
           } else {
             printf("Não foi possível editar, cliente não encontrado.\n");
           }
@@ -137,31 +102,29 @@ int main() {
           system("clear");
           exibeErro();
         }
-        fclose(arq);
     } else if (opc == 6) { //Remoção de contato por código
-        arq = fopen("clientes.txt", "r+b");
-        if (arq == NULL) {
-          printf("Erro ao abrir arquivo\n");
-          return 0;
-        }
-        estaVazia = listaVazia(li);
-        if(!estaVazia) {
-          int codigo;
-          printf("Digite o código do cliente a ser removido: ");
-          scanf("%d", &codigo);
-          int encontrou = removeContato(li, codigo);
-          if (encontrou) {
+      if (!leu) {
+        printf("Erro ao ler arquivo.\n");
+        return 0;
+      }
+      estaVazia = listaVazia(li);
+      if(!estaVazia) {
+        int codigo;
+        printf("Digite o código do cliente a ser removido: ");
+        scanf("%d", &codigo);
+        int encontrou = removeContato(li, codigo);
+        if (encontrou) {
+          if (gravou = gravaArquivo(li, 2)) {
             printf("Cliente removido com sucesso!\n");
-          } else {
-            printf("Não foi possível remover, cliente não encontrado.\n");
           }
-        } else {
-          system("clear");
-          exibeErro();
-        }
-        fclose(arq);
+        } 
+      } else {
+        system("clear");
+        exibeErro();
+      }
     } else if (opc == 7) {//Encerra programa
       printf("Encerrando o programa...\n\n");
+      estaVazia = listaVazia(li);
        if (!estaVazia) {
         destroiLista(li);
         return 0;

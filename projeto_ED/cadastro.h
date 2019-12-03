@@ -11,6 +11,7 @@ typedef struct cli{
 }CLIENTE;
 
 typedef struct elemento *Lista;
+FILE *arq;
 
 Lista *criaLista();
 
@@ -35,5 +36,7 @@ int removeContato(Lista *li, int codigo);
 CLIENTE recebeDados();
 
 //Funções auxiliares para manipulação de arquivos
-int gravaArquivo (FILE *arq, Lista *li); 
-void leLista(FILE *arq, Lista *li);
+FILE *abreEdicao(Lista *li);
+FILE *abreInsercao();
+int gravaArquivo (Lista *li, int tipo); 
+int leArquivo(Lista *li);
