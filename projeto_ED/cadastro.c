@@ -11,7 +11,7 @@ struct elemento{
 
 typedef struct elemento Elem;
 
-//FUNÇÕES LISTA 
+//FUNÇÕES LISTA
 Lista *criaLista(){
     Lista *li = (Lista*) malloc(sizeof(Lista));
     if(li != NULL){
@@ -35,7 +35,7 @@ int tamanhoLista (Lista *li) {
   if (li == NULL) {
     return 0;
   }
-  
+
   int tamanho = 0;
   Elem *no = *li;
 
@@ -78,7 +78,7 @@ int inserirCliente(Lista *li, CLIENTE cli){
         anterior = atual;
         atual = atual->prox;
     }
-    
+
     if(atual == *li){
       no->ant = NULL;
       (*li)->ant = no;
@@ -97,7 +97,7 @@ int inserirCliente(Lista *li, CLIENTE cli){
   return 1;
 }
 
-// FUNÇÕES MAIN 
+// FUNÇÕES MAIN
 //Exibe Menu
 int exibeMenu() {
   int opc;
@@ -164,7 +164,7 @@ int buscaCliNome(Lista *li, char *nome, CLIENTE *cli) {
   while (no != NULL && strcmp(no->dados.nome, nome) != 0) {
     no = no->prox;
   }
-  
+
   if (no == NULL) {
     return 0;
   } else {
@@ -217,7 +217,7 @@ int removeContato(Lista *li, int codigo) {
     *li = no->prox;
   } else {
     no->ant->prox = no->prox;
-  } 
+  }
 
   if (no->prox != NULL) {
     no->prox->ant = no->ant;
@@ -264,14 +264,9 @@ FILE *abreEdicao(Lista *li) {
 
   return arq;
 }
-FILE *abreInsercao();
 
 int gravaArquivo (Lista *li, int tipo) {
-  if (tipo == 1) { //Verifica se é inserção ou edição
-    arq = fopen("clientes.txt", "wb");
-  } else { //Abre no modo edição
-    arq = abreEdicao(li);
-  }
+  arq = fopen("clientes.txt", "wb");
   if (arq == NULL) {
     printf("Erro ao abrir arquivo\n");
     return 0;
@@ -286,12 +281,12 @@ int gravaArquivo (Lista *li, int tipo) {
 
     no = no->prox;
   }
-  
+
   fclose(arq);
   return 1;
 }
 
-int leArquivo (Lista *li) { 
+int leArquivo (Lista *li) {
   arq = fopen("clientes.txt", "rb");
   if (arq == NULL) {
     return 0;
