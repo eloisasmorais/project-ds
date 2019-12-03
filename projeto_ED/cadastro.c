@@ -31,7 +31,6 @@ void destroiLista(Lista *li) {
     free(li);
   }
 }
-
 int tamanhoLista (Lista *li) {
   if (li == NULL) {
     return 0;
@@ -259,11 +258,14 @@ CLIENTE recebeDados() {
 
 //Funções auxiliares para manipulação de arquivos
 
+
 int gravaArquivo (FILE *arq, Lista *li) {
   printf("Gravando arquivo...\n");
   if (arq == NULL || li == NULL) return 0;
 
+
   CLIENTE *dados;
+  dados = (CLIENTE*) calloc (tamanhoLista(li), sizeof(CLIENTE));
   Elem *no = *li;
   while (no != NULL) {
     *dados = no->dados;
