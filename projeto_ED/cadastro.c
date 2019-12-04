@@ -173,10 +173,6 @@ int buscaCliCod (Lista *li, int cod, CLIENTE *cli) {
 void buscaCliNome(Lista *li, char *nome) {
   CLIENTE cli;
   Elem *no = *li;
-  //int contResult = 0;
-  //while (no != NULL && strcmp(no->dados.nome, nome) != 0) {
-    //no = no->prox;
-  //}
 
   while (no != NULL) {
     if (strcmp(no->dados.nome, nome) == 0) {
@@ -188,11 +184,6 @@ void buscaCliNome(Lista *li, char *nome) {
   if (no == NULL) {
     return;
   }
-
-  //else {
-   // *cli = no->dados;
-   // return 1;
-  //}
 }
 
 void exibeCli(CLIENTE *cli) {
