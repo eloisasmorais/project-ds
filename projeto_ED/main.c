@@ -19,7 +19,7 @@ int main() {
     leu = leArquivo(li);
     fclose(arq);
   }
-  printf("tamanho li: %d\n", tamanhoLista(li));
+  //printf("tamanho li: %d\n", tamanhoLista(li));
   /* Menu */
   printf("****** Lista de Contatos ******\n");
   opc = exibeMenu();
