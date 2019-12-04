@@ -28,7 +28,8 @@ int exibeMenu(); //Exibe menu de opções do programa
 void exibeErro();
 void exibeRelatorioTotal(Lista *li);
 int buscaCliCod(Lista *li, int cod, CLIENTE *cli);
-int buscaCliNome(Lista *li, char *nome, CLIENTE *cli);
+void buscaCliNome(Lista *li, char *nome);
+void exibeClientes(CLIENTE cli);
 void exibeCli(CLIENTE *cli);
 int editaContato(Lista *li, int codigo);
 int removeContato(Lista *li, int codigo);
@@ -36,7 +37,5 @@ int removeContato(Lista *li, int codigo);
 CLIENTE recebeDados();
 
 //Funções auxiliares para manipulação de arquivos
-FILE *abreEdicao(Lista *li);
-FILE *abreInsercao();
-int gravaArquivo (Lista *li, int tipo); 
+int gravaArquivo (Lista *li);
 int leArquivo(Lista *li);

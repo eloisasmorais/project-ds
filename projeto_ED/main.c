@@ -14,12 +14,12 @@ int main() {
   FILE *arq;
   arq = fopen("clientes.txt", "rb");
   if (arq == NULL) {
-    arq = fopen("clientes.txt", "wb");
+    arq = fopen("clientes.txt", "w+b");
   } else {
     leu = leArquivo(li);
     fclose(arq);
   }
-
+  printf("tamanho li: %d\n", tamanhoLista(li));
   /* Menu */
   printf("****** Lista de Contatos ******\n");
   opc = exibeMenu();
@@ -28,8 +28,8 @@ int main() {
     if (opc == 1) {
       dados = recebeDados();
       inseriu = inserirCliente(li, dados);
-      gravou = gravaArquivo(li, 1);
-      
+      gravou = gravaArquivo(li);
+
       if (inseriu && gravou) {
         printf("Cliente armazenado com sucesso!\n");
       } else {
@@ -41,7 +41,6 @@ int main() {
         printf("****** Relatório Total - Contatos ******\n");
         exibeRelatorioTotal(li);
       } else {
-        system("clear");
         exibeErro();
       }
     } else if (opc == 3) { //Relatório individual por código
@@ -58,7 +57,6 @@ int main() {
           printf("Nenhum cliente encontrado!\n");
         }
       } else {
-        system("clear");
         exibeErro();
       }
     } else if (opc == 4) { //Relatório individual por nome
@@ -70,15 +68,14 @@ int main() {
         getchar();
         fgets(nome, 31, stdin);
         nome[strlen(nome)-1]='\0';
-
-        int encontrou = buscaCliNome(li, nome, &cli);
-        if (encontrou){
-          exibeCli(&cli);
-        } else {
-          printf("Nenhum cliente encontrado!\n");
-        }
+        buscaCliNome(li, nome);
+        //int encontrou = buscaCliNome(li, nome, &cli);
+       // if (encontrou){
+          //exibeCli(&cli);
+       // } else {
+        //  printf("Nenhum cliente encontrado!\n");
+        //}
       } else {
-        system("clear");
         exibeErro();
       }
     } else if (opc == 5) { //Edição de contato por código
@@ -94,12 +91,11 @@ int main() {
           int encontrou = editaContato(li, codigo);
           if (encontrou) {
             printf("Cliente editado com sucesso!\n");
-            gravou = gravaArquivo(li, 2);
+            gravou = gravaArquivo(li);
           } else {
             printf("Não foi possível editar, cliente não encontrado.\n");
           }
         } else {
-          system("clear");
           exibeErro();
         }
     } else if (opc == 6) { //Remoção de contato por código
@@ -114,12 +110,14 @@ int main() {
         scanf("%d", &codigo);
         int encontrou = removeContato(li, codigo);
         if (encontrou) {
-          if (gravou = gravaArquivo(li, 2)) {
-            printf("Cliente removido com sucesso!\n");
+          printf("Cliente apagado com sucesso!\n");
+          gravou = gravaArquivo(li);
+          if (!gravou) {
+            printf("Falha ao gravar no arquivo!\n");
+          } else {
           }
-        } 
+        }
       } else {
-        system("clear");
         exibeErro();
       }
     } else if (opc == 7) {//Encerra programa
@@ -137,7 +135,7 @@ int main() {
     printf("Aperte 1 para voltar ao menu: ");
     scanf("%d", &l);
     if (l) {
-      opc = exibeMenu(); 
+      opc = exibeMenu();
     }
   }
 }

@@ -12,3 +12,19 @@
 	<stdlib.h>
 	"cadastro.h"
 
+1575422019 source:c:\users\neone\downloads\project-ds-master\projeto_ed\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<locale.h>
+	"cadastro.h"
+
+1575422401 c:\users\neone\downloads\project-ds-master\projeto_ed\cadastro.h
+	<stdio.h>
+
+1575422808 source:c:\users\neone\downloads\project-ds-master\projeto_ed\cadastro.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"cadastro.h"
+

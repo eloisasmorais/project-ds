@@ -144,6 +144,17 @@ void exibeRelatorioTotal(Lista *li) {
 
     no = no->prox;
   }
+  free(dados);
+}
+
+void exibeClientes(CLIENTE cli) {
+    printf("%d - %s\n", cli.codigo,cli.nome);
+    printf("Empresa: %s\n", cli.empresa);
+    printf("Departamento: %s\n", cli.departamento);
+    printf("Telefone: %s\n", cli.telefone);
+    printf("Celular: %s\n", cli.celular);
+    printf("Email: %s\n", cli.email);
+    printf("\n\n");
 }
 
 int buscaCliCod (Lista *li, int cod, CLIENTE *cli) {
@@ -159,19 +170,29 @@ int buscaCliCod (Lista *li, int cod, CLIENTE *cli) {
     return 1;
   }
 }
-
-int buscaCliNome(Lista *li, char *nome, CLIENTE *cli) {
+void buscaCliNome(Lista *li, char *nome) {
+  CLIENTE cli;
   Elem *no = *li;
-  while (no != NULL && strcmp(no->dados.nome, nome) != 0) {
+  //int contResult = 0;
+  //while (no != NULL && strcmp(no->dados.nome, nome) != 0) {
+    //no = no->prox;
+  //}
+
+  while (no != NULL) {
+    if (strcmp(no->dados.nome, nome) == 0) {
+      cli = no->dados;
+      exibeClientes(cli);
+    }
     no = no->prox;
   }
-
   if (no == NULL) {
-    return 0;
-  } else {
-    *cli = no->dados;
-    return 1;
+    return;
   }
+
+  //else {
+   // *cli = no->dados;
+   // return 1;
+  //}
 }
 
 void exibeCli(CLIENTE *cli) {
@@ -257,16 +278,7 @@ CLIENTE recebeDados() {
 }
 
 //Funções auxiliares para manipulação de arquivos
-FILE *abreEdicao(Lista *li) {
-  arq = fopen("clientes.txt", "wb");
-  int leu = leArquivo(li);
-  fclose(arq);
-  arq = fopen("clientes.txt", "w+b");
-
-  return arq;
-}
-
-int gravaArquivo (Lista *li, int tipo) {
+int gravaArquivo (Lista *li) {
   arq = fopen("clientes.txt", "wb");
   if (arq == NULL) {
     printf("Erro ao abrir arquivo\n");
@@ -283,6 +295,7 @@ int gravaArquivo (Lista *li, int tipo) {
     no = no->prox;
   }
 
+  free(dados);
   fclose(arq);
   return 1;
 }
@@ -293,8 +306,9 @@ int leArquivo (Lista *li) {
     return 0;
   }
   CLIENTE cli;
-  while (!feof(arq)) {
+  while (1) {
     fread(&cli, sizeof(CLIENTE), 1, arq);
+    if(feof(arq)) break;
     inserirCliente(li, cli);
   }
   fclose(arq);
