@@ -103,7 +103,6 @@ int inserirCliente(Lista *li, CLIENTE cli){
 int exibeMenu() {
   setlocale(LC_ALL,"Portuguese");
   int opc;
-  int tentativa = 0;
   while(opc < 1 || opc > 7){
     printf("****** Lista de Clientes ******\n\n");
     printf("1 - Inserir novo contato\n");
@@ -119,7 +118,6 @@ int exibeMenu() {
     } else {
       printf("Escolha uma opção: ");
     }
-    tentativa++;
 
     scanf("%d",&opc);
   }
@@ -136,12 +134,12 @@ void exibeRelatorioTotal(Lista *li) {
   Elem *no = *li;
   while (no != NULL) {
     dados = no->dados;
-    exibeClientes(dados);
+    exibeClientes(dados); //Chama função de exibição
     no = no->prox;
   }
 }
 
-void exibeClientes(CLIENTE cli) {
+void exibeClientes(CLIENTE cli) { //Imprime os dados na tela
     printf("%d - %s\n", cli.codigo,cli.nome);
     printf("Empresa: %s\n", cli.empresa);
     printf("Departamento: %s\n", cli.departamento);
@@ -151,7 +149,7 @@ void exibeClientes(CLIENTE cli) {
     printf("\n");
 }
 
-int buscaCliCod (Lista *li, int cod, CLIENTE *cli) {
+int buscaCliCod (Lista *li, int cod, CLIENTE *cli) { //busca padrão em uma lista
   printf("\n****** Busca por código ******\n");
 
   Elem *no = *li;
@@ -201,14 +199,14 @@ int editaContato(Lista *li, int codigo) {
   if (no == NULL) {
     return 0;
   } else {
-      CLIENTE cli = recebeDados(codigo, 1);
+      CLIENTE cli = recebeDados(codigo, 1); //passa código e sinaliza modo de edição
       no->dados = cli;
 
       return 1;
   }
 }
 
-int removeContato(Lista *li, int codigo) {
+int removeContato(Lista *li, int codigo) { //Função padrão de remoção da lista
   printf("\n****** Remoção de contato ******\n");
   if (li == NULL) return 0;
 
@@ -238,10 +236,10 @@ int removeContato(Lista *li, int codigo) {
 CLIENTE recebeDados(int codigo, int edicao) {
   CLIENTE dados;
 
-  if (!edicao) {  
+  if (!edicao) {  //Verifica se não é modo de ediçao, se não for, permite adição do código
     printf("\nInforme o código do funcionário: ");
     scanf("%d",&dados.codigo);
-  } else {
+  } else { //Se for modo edição, o código não poderá ser alterado, logo é passado como parâmetro da função e atribuido à variável
     dados.codigo = codigo;
   }
   printf("Informe o nome: ");
@@ -280,7 +278,7 @@ int gravaArquivo (Lista *li) {
   Elem *no = *li;
   while (no != NULL) {
     *dados = no->dados;
-    fwrite(dados, sizeof(CLIENTE), 1, arq);
+    fwrite(dados, sizeof(CLIENTE), 1, arq); //Escrita dos dados no arquivo
 
     no = no->prox;
   }
@@ -298,8 +296,8 @@ int leArquivo (Lista *li) {
   CLIENTE cli;
   while (1) {
     fread(&cli, sizeof(CLIENTE), 1, arq);
-    if(feof(arq)) break;
-    inserirCliente(li, cli);
+    if(feof(arq)) break; //Verifica se é o fim do arquivo
+    inserirCliente(li, cli); //Grava na lista os dados lidos do arquivo
   }
   fclose(arq);
   return 1;
