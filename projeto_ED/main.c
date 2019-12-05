@@ -6,25 +6,23 @@
 
 int main() {
   setlocale(LC_ALL,"Portuguese");
-  int opc, estaVazia, gravou, leu, inseriu;
+  int opc, estaVazia, gravou, leu = 0, inseriu;
   Lista *li = NULL;
   CLIENTE dados;
 
   li = criaLista();
   FILE *arq;
   arq = fopen("clientes.txt", "rb");
-  if (arq == NULL) {
-    arq = fopen("clientes.txt", "w+b");
-  } else {
+  if (arq != NULL) {
     leu = leArquivo(li);
     fclose(arq);
   }
   if (!leu) {
-    printf("Erro ao ler arquivo.\n");
-    return 0;
-  } else {
-    opc = exibeMenu();
+    printf("Nenhum arquivo encontrado, abrindo novo arquivo para escrita.\n\n");
+    arq = fopen("clientes.txt", "w+b");
+    fclose(arq); //Fecha arquivo pois novas aberturas serão efetuadas dentro das funções
   }
+  opc = exibeMenu();
 
   while(opc) {
     if (opc == 1) {
@@ -63,7 +61,7 @@ int main() {
       estaVazia = listaVazia(li);
       if(!estaVazia) {
         char nome[31];
-        printf("Digite o nome desejado: ");
+        printf("OBS: Este programa possui distinção entre maiúsculas e minúsculas, digite com atenção.\nBuscar nome: ");
         getchar();
         fgets(nome, 31, stdin);
         nome[strlen(nome)-1]='\0';
@@ -88,6 +86,7 @@ int main() {
         }
     } else if (opc == 6) { //Remoção de contato por código
       estaVazia = listaVazia(li);
+      printf("\n****** Remoção de contato ******\n");
       if(!estaVazia) {
         int codigo;
         printf("Digite o código do cliente a ser removido: ");

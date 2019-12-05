@@ -103,6 +103,7 @@ int inserirCliente(Lista *li, CLIENTE cli){
 int exibeMenu() {
   setlocale(LC_ALL,"Portuguese");
   int opc;
+  int tentativa = 0;
   while(opc < 1 || opc > 7){
     printf("****** Lista de Clientes ******\n\n");
     printf("1 - Inserir novo contato\n");
@@ -118,6 +119,7 @@ int exibeMenu() {
     } else {
       printf("Escolha uma opção: ");
     }
+    tentativa++;
 
     scanf("%d",&opc);
   }
@@ -167,8 +169,6 @@ int buscaCliCod (Lista *li, int cod, CLIENTE *cli) { //busca padrão em uma list
 
 int buscaCliNome(Lista *li, char *nome) {
   printf("\n****** Busca por nome ******\n");
-  printf("OBS: Este programa possui distinção entre maiúsculas e ");
-  printf("minúsculas. Digite com atenção.");
   CLIENTE cli;
   Elem *no = *li;
   int encontrou = 0;
@@ -207,7 +207,6 @@ int editaContato(Lista *li, int codigo) {
 }
 
 int removeContato(Lista *li, int codigo) { //Função padrão de remoção da lista
-  printf("\n****** Remoção de contato ******\n");
   if (li == NULL) return 0;
 
   Elem *no = *li;
@@ -259,7 +258,7 @@ CLIENTE recebeDados(int codigo, int edicao) {
   fgets(dados.celular,21,stdin);
   dados.celular[strlen(dados.celular)-1]='\0';
   printf("Informe o email: ");
-  fgets(dados.email,31,stdin);
+  fgets(dados.email,41,stdin);
   dados.email[strlen(dados.email)-1]='\0';
 
   return dados;

@@ -2,12 +2,12 @@
 
 typedef struct cli{
     int codigo;
-    char nome[30];
-    char empresa[20];
-    char departamento[20];
-    char telefone[20];
-    char celular[20];
-    char email[30];
+    char nome[31];
+    char empresa[21];
+    char departamento[21];
+    char telefone[21];
+    char celular[21];
+    char email[41];
 }CLIENTE;
 
 typedef struct elemento *Lista;
@@ -83,7 +83,6 @@ CLIENTE recebeDados(int codigo, int edicao);
   int para verificar se é modo de edição ou inserção
   Retorno da função: retorna struct do tipo CLIENTE
 */
-
 
 //Funções auxiliares para manipulação de arquivos
 int gravaArquivo (Lista *li);
