@@ -30,17 +30,20 @@ int exibeMenu();
   Exibe menu de opções do programa
   Retorno da função: int com o opção escolhida
 */
+
 void exibeErro(); 
 /*
   Exibe mensagem de erro padrão
   Retorno da função: nenhum
 */
+
 void exibeRelatorioTotal(Lista *li);
 /*
   Exibe todos os clientes armazenados na lista
   Parâmetros: ponteiro do tipo Lista
   Retorno da função: nenhum
  */
+
 int buscaCliCod(Lista *li, int cod, CLIENTE *cli);
 /*
   Busca cliente em função do código identificador
@@ -48,18 +51,21 @@ int buscaCliCod(Lista *li, int cod, CLIENTE *cli);
   ponteiro para struct CLIENTE
   Retorno da função: retorna 1 se encontrar o código, retorna 0 se nó == NULL
 */
+
 int buscaCliNome(Lista *li, char *nome);
 /*
   Busca cliente em função do nome, procura substring em todos os nomes da lista
   Parâmetros: ponteiro do tipo Lista, ponteiro para string,
   Retorno da função: retorna 1 se encontrar nomes, retorna 0 se não encontrar
 */
+
 void exibeClientes(CLIENTE cli);
 /*
   Exibe dados dos clientes
   Parâmetros: variável do tipo CLIENTE
   Retorno da função: nenhum
 */
+
 int editaContato(Lista *li, int codigo);
 /*
   Edição de clientes, um por vez, através do código
@@ -67,6 +73,7 @@ int editaContato(Lista *li, int codigo);
   do cliente a ser editado
   Retorno da função: 1 se encontrou o cliente, 0 se não encontrar 
 */
+
 int removeContato(Lista *li, int codigo);
 /*
   Remove cliente da lista, um por vez.
