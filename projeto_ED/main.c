@@ -19,10 +19,12 @@ int main() {
     leu = leArquivo(li);
     fclose(arq);
   }
-  //printf("tamanho li: %d\n", tamanhoLista(li));
-  /* Menu */
-  printf("****** Lista de Contatos ******\n");
-  opc = exibeMenu();
+  if (!leu) {
+    printf("Erro ao ler arquivo.\n");
+    return 0;
+  } else {
+    opc = exibeMenu();
+  }
 
   while(opc) {
     if (opc == 1) {
@@ -38,7 +40,7 @@ int main() {
     } else if (opc == 2) { //Relatório geral
       estaVazia = listaVazia(li);
       if (!estaVazia) {
-        printf("****** Relatório Total - Contatos ******\n");
+        printf("****** Relatório Total - Clientes ******\n");
         exibeRelatorioTotal(li);
       } else {
         exibeErro();
@@ -48,7 +50,7 @@ int main() {
       if(!estaVazia) {
         int codigo;
         CLIENTE cli;
-        printf("Digite o código do cliente: ");
+        printf("Digite o código desejado: ");
         scanf("%d", &codigo);
         int encontrou = buscaCliCod(li, codigo, &cli);
         if (encontrou) {
@@ -56,33 +58,20 @@ int main() {
         } else {
           printf("Nenhum cliente encontrado!\n");
         }
-      } else {
-        exibeErro();
       }
     } else if (opc == 4) { //Relatório individual por nome
       estaVazia = listaVazia(li);
       if(!estaVazia) {
         char nome[31];
-        CLIENTE cli;
-        printf("Digite o nome: ");
+        printf("Digite o nome desejado: ");
         getchar();
         fgets(nome, 31, stdin);
         nome[strlen(nome)-1]='\0';
         buscaCliNome(li, nome);
-        //int encontrou = buscaCliNome(li, nome, &cli);
-       // if (encontrou){
-          //exibeCli(&cli);
-       // } else {
-        //  printf("Nenhum cliente encontrado!\n");
-        //}
       } else {
         exibeErro();
       }
     } else if (opc == 5) { //Edição de contato por código
-        if (!leu) {
-          printf("Erro ao ler arquivo.\n");
-          return 0;
-        }
         estaVazia = listaVazia(li);
         if(!estaVazia) {
           int codigo;
@@ -95,14 +84,8 @@ int main() {
           } else {
             printf("Não foi possível editar, cliente não encontrado.\n");
           }
-        } else {
-          exibeErro();
         }
     } else if (opc == 6) { //Remoção de contato por código
-      if (!leu) {
-        printf("Erro ao ler arquivo.\n");
-        return 0;
-      }
       estaVazia = listaVazia(li);
       if(!estaVazia) {
         int codigo;
@@ -117,8 +100,6 @@ int main() {
           } else {
           }
         }
-      } else {
-        exibeErro();
       }
     } else if (opc == 7) {//Encerra programa
       printf("Encerrando o programa...\n\n");
@@ -131,11 +112,6 @@ int main() {
       }
     }
 
-    int l = 0;
-    printf("Aperte 1 para voltar ao menu: ");
-    scanf("%d", &l);
-    if (l) {
-      opc = exibeMenu();
-    }
+   opc = exibeMenu();
   }
 }
