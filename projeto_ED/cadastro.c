@@ -105,7 +105,7 @@ int exibeMenu() {
   int opc;
   int tentativa = 0;
   while(opc < 1 || opc > 7){
-    printf("****** Lista de Clientes ******\n");
+    printf("****** Lista de Clientes ******\n\n");
     printf("1 - Inserir novo contato\n");
     printf("2 - Gerar e exibir relatório de contatos em forma de lista total\n");
     printf("3 - Gerar e exibir relatório individual com busca por identificador\n");
@@ -132,8 +132,6 @@ void exibeErro() {
 }
 
 void exibeRelatorioTotal(Lista *li) {
-  //CLIENTE *dados;
-  //dados = (CLIENTE*) malloc (tamanhoLista(li)* sizeof(CLIENTE));
   CLIENTE dados;
   Elem *no = *li;
   while (no != NULL) {
@@ -141,7 +139,6 @@ void exibeRelatorioTotal(Lista *li) {
     exibeClientes(dados);
     no = no->prox;
   }
-  //free(dados);
 }
 
 void exibeClientes(CLIENTE cli) {
@@ -151,10 +148,12 @@ void exibeClientes(CLIENTE cli) {
     printf("Telefone: %s\n", cli.telefone);
     printf("Celular: %s\n", cli.celular);
     printf("Email: %s\n\n", cli.email);
-    printf("\n\n");
+    printf("\n");
 }
 
 int buscaCliCod (Lista *li, int cod, CLIENTE *cli) {
+  printf("\n****** Busca por código ******\n");
+
   Elem *no = *li;
   while (no != NULL && no->dados.codigo != cod) {
     no = no->prox;
@@ -167,34 +166,33 @@ int buscaCliCod (Lista *li, int cod, CLIENTE *cli) {
     return 1;
   }
 }
-void buscaCliNome(Lista *li, char *nome) {
+
+int buscaCliNome(Lista *li, char *nome) {
+  printf("\n****** Busca por nome ******\n");
+  printf("OBS: Este programa possui distinção entre maiúsculas e ");
+  printf("minúsculas. Digite com atenção.");
   CLIENTE cli;
   Elem *no = *li;
+  int encontrou = 0;
+  char *contem = NULL; //ponteiro para posição da substring, se existir
 
   while (no != NULL) {
-    if (strcmp(no->dados.nome, nome) == 0) {
+    contem = strstr(no->dados.nome, nome); //Verifica se nome inserido é substring de no->dados.nome
+    if (contem != NULL) { 
       cli = no->dados;
       exibeClientes(cli);
+      encontrou++; //flag para retorno da função
     }
     no = no->prox;
   }
-  if (no == NULL) {
-    return;
+  if (encontrou == 0) {
+    return 0;
   }
-}
-
-void exibeCli(CLIENTE *cli) {
-  printf("\n============= CLIENTE =============\n");
-  printf("%d - %s\n", cli->codigo, cli->nome);
-  printf("Empresa: %s\n", cli->empresa);
-  printf("Departamento: %s\n", cli->departamento);
-  printf("Telefone: %s\n", cli->telefone);
-  printf("Celular: %s\n", cli->celular);
-  printf("Email: %s\n", cli->email);
+  return 1;
 }
 
 int editaContato(Lista *li, int codigo) {
-  printf("Edição de contato\n\n");
+  printf("\n****** Busca por código ******\n");
   Elem *no = *li;
   while (no != NULL && no->dados.codigo != codigo) {
     no = no->prox;
@@ -203,7 +201,7 @@ int editaContato(Lista *li, int codigo) {
   if (no == NULL) {
     return 0;
   } else {
-      CLIENTE cli = recebeDados();
+      CLIENTE cli = recebeDados(codigo, 1);
       no->dados = cli;
 
       return 1;
@@ -211,7 +209,7 @@ int editaContato(Lista *li, int codigo) {
 }
 
 int removeContato(Lista *li, int codigo) {
-  printf("Remoção de contato\n\n");
+  printf("\n****** Remoção de contato ******\n");
   if (li == NULL) return 0;
 
   Elem *no = *li;
@@ -237,13 +235,17 @@ int removeContato(Lista *li, int codigo) {
   return 1;
 }
 
-CLIENTE recebeDados() {
+CLIENTE recebeDados(int codigo, int edicao) {
   CLIENTE dados;
 
-  printf("Informe o código do funcionário: ");
-  scanf("%d",&dados.codigo);
-  getchar();
+  if (!edicao) {  
+    printf("\nInforme o código do funcionário: ");
+    scanf("%d",&dados.codigo);
+  } else {
+    dados.codigo = codigo;
+  }
   printf("Informe o nome: ");
+  getchar();
   fgets(dados.nome, 31, stdin);
   dados.nome[strlen(dados.nome)-1]='\0';
   printf("Informe a Empresa: ");

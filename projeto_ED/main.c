@@ -28,19 +28,19 @@ int main() {
 
   while(opc) {
     if (opc == 1) {
-      dados = recebeDados();
+      dados = recebeDados(0, 0);
       inseriu = inserirCliente(li, dados);
       gravou = gravaArquivo(li);
 
       if (inseriu && gravou) {
-        printf("Cliente armazenado com sucesso!\n");
+        printf("\nCliente armazenado com sucesso!\n\n");
       } else {
-        printf("Erro ao armazenar cliente\n");
+        printf("\nErro ao armazenar cliente\n\n");
       }
     } else if (opc == 2) { //Relatório geral
       estaVazia = listaVazia(li);
       if (!estaVazia) {
-        printf("****** Relatório Total - Clientes ******\n");
+        printf("\n****** Relatório Total - Clientes ******\n");
         exibeRelatorioTotal(li);
       } else {
         exibeErro();
@@ -54,7 +54,7 @@ int main() {
         scanf("%d", &codigo);
         int encontrou = buscaCliCod(li, codigo, &cli);
         if (encontrou) {
-          exibeCli(&cli);
+          exibeClientes(cli);
         } else {
           printf("Nenhum cliente encontrado!\n");
         }
@@ -67,10 +67,11 @@ int main() {
         getchar();
         fgets(nome, 31, stdin);
         nome[strlen(nome)-1]='\0';
-        buscaCliNome(li, nome);
-      } else {
-        exibeErro();
-      }
+        int encontrou = buscaCliNome(li, nome);
+        if (!encontrou) {
+          printf("Cliente não encontrado!");
+        }
+      } 
     } else if (opc == 5) { //Edição de contato por código
         estaVazia = listaVazia(li);
         if(!estaVazia) {
