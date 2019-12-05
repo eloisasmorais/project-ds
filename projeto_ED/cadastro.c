@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
 #include "cadastro.h"
 
 struct elemento{
@@ -100,9 +101,11 @@ int inserirCliente(Lista *li, CLIENTE cli){
 // FUNÇÕES MAIN
 //Exibe Menu
 int exibeMenu() {
+  setlocale(LC_ALL,"Portuguese");
   int opc;
   int tentativa = 0;
   while(opc < 1 || opc > 7){
+    printf("****** Lista de Clientes ******\n");
     printf("1 - Inserir novo contato\n");
     printf("2 - Gerar e exibir relatório de contatos em forma de lista total\n");
     printf("3 - Gerar e exibir relatório individual com busca por identificador\n");
@@ -129,22 +132,16 @@ void exibeErro() {
 }
 
 void exibeRelatorioTotal(Lista *li) {
-  CLIENTE *dados;
-  dados = (CLIENTE*) malloc (tamanhoLista(li)* sizeof(CLIENTE));
+  //CLIENTE *dados;
+  //dados = (CLIENTE*) malloc (tamanhoLista(li)* sizeof(CLIENTE));
+  CLIENTE dados;
   Elem *no = *li;
   while (no != NULL) {
-    *dados = no->dados;
-    printf("\n============= CLIENTE =============\n");
-    printf("%d - %s\n", dados->codigo, dados->nome);
-    printf("Empresa: %s\n", dados->empresa);
-    printf("Departamento: %s\n", dados->departamento);
-    printf("Telefone: %s\n", dados->telefone);
-    printf("Celular: %s\n", dados->celular);
-    printf("Email: %s\n", dados->email);
-
+    dados = no->dados;
+    exibeClientes(dados);
     no = no->prox;
   }
-  free(dados);
+  //free(dados);
 }
 
 void exibeClientes(CLIENTE cli) {
@@ -153,7 +150,7 @@ void exibeClientes(CLIENTE cli) {
     printf("Departamento: %s\n", cli.departamento);
     printf("Telefone: %s\n", cli.telefone);
     printf("Celular: %s\n", cli.celular);
-    printf("Email: %s\n", cli.email);
+    printf("Email: %s\n\n", cli.email);
     printf("\n\n");
 }
 
